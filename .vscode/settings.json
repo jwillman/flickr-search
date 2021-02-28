@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/bd304798-71e2-424a-8d4d-06a245881942/resourceGroups/flickr-search/providers/Microsoft.Web/sites/flickr-search",
+    "appService.deploySubpath": "."
+}
