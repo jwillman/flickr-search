@@ -4,7 +4,7 @@ function App() {
   return (
     <div className="App">
       <h1>Flickr search</h1>
-      <input id="search" type={Text}></input>
+      <input id="search"></input>
     </div>
   );
 }
