@@ -1,9 +1,14 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { flickrSearch } from "./flickr.js";
 
 function App() {
   const [searchString, setSearchString] = useState("");
   var items = ["item 1", "item 2", "item 3"];
+
+  useEffect(() => {
+    flickrSearch(searchString);
+  });
 
   return (
     <div className="App">
@@ -17,10 +22,7 @@ function App() {
 
 function Search(props) {
   return (
-    <input
-      id="search"
-      onChange={(e) => props.setSearchString(e.target.value)}
-    ></input>
+    <input onChange={(e) => props.setSearchString(e.target.value)}></input>
   );
 }
 
