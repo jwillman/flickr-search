@@ -14,7 +14,6 @@ function App() {
     <div className="App">
       <h1>Flickr search</h1>
       <Search setSearchString={setSearchString} />
-      search: {searchString}
       <Results items={items} />
     </div>
   );
