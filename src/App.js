@@ -27,7 +27,7 @@ function Search(props) {
 
 function Results(props) {
     const resultItems = props.items.map((x, index) => (
-        <img alt="Flickr" src={x} key={index} />
+        <img className="image" alt="Flickr" src={x} key={index} />
     ));
     return <div id="results">{resultItems}</div>;
 }

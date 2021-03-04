@@ -11,8 +11,12 @@
 }
 
 #results {
-    padding-top: 40px;
+    padding-top: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.image {
+    padding-top: 5px;
 }
