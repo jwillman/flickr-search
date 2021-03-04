@@ -4,17 +4,17 @@ import { flickrSearch } from "./flickr.js";
 
 function App() {
     const [searchString, setSearchString] = useState("");
-    var items = ["item 1", "item 2", "item 3"];
+    const [photoUrls, setPhotoUrls] = useState([]);
 
     useEffect(() => {
-        flickrSearch(searchString);
-    });
+        setPhotoUrls(flickrSearch(searchString, 2));
+    }, [searchString]);
 
     return (
         <div className="App">
             <h1>Flickr search</h1>
             <Search setSearchString={setSearchString} />
-            <Results items={items} />
+            <Results items={photoUrls} />
         </div>
     );
 }
@@ -26,12 +26,10 @@ function Search(props) {
 }
 
 function Results(props) {
-    const resultItems = props.items.map((x, index) => <li key={index}>{x}</li>);
-    return (
-        <div id="results">
-            <ul>{resultItems}</ul>
-        </div>
-    );
+    const resultItems = props.items.map((x, index) => (
+        <img alt="Flickr" src={x} key={index} />
+    ));
+    return <div id="results">{resultItems}</div>;
 }
 
 export default App;

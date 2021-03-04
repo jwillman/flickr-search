@@ -2,7 +2,7 @@
 
 // TODO stay under 3600 queries per hour
 // TODO cache results
-export function flickrSearch(searchstring) {
+export function flickrSearch(searchstring, amount) {
     console.log(`Flickr search called with ${searchstring}`);
 
     //("https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=&text=flower&format=json&nojsoncallback=1");
@@ -18,4 +18,9 @@ export function flickrSearch(searchstring) {
     //   const myJson = await response.json(); //extract JSON from the http response
     //   // do something with myJson
     // };
+
+    return [
+        "http://live.staticflickr.com/65535/51003805317_127bd912d2.jpg",
+        "https://live.staticflickr.com/65535/51002983868_b87cf9e197.jpg",
+    ];
 }
