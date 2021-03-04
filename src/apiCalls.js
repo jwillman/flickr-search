@@ -1,9 +1,9 @@
-export function flickrSearch(searchstring, results) {
+export function searchPhotosFromFlickr(searchstring, results) {
     const serverUrl = `https://flickr-search-server.azurewebsites.net/api/FlickrSearch?searchstring=${searchstring}&results=${results}`;
 
     console.log(`Flickr search called with ${searchstring} ${results}`);
 
-    const callServer = async () => {
+    async function fetchPhotoUrls() {
         const response = await fetch(serverUrl, {
             method: "GET",
             headers: {
@@ -12,7 +12,7 @@ export function flickrSearch(searchstring, results) {
         });
         const responseJson = await response.json();
         return responseJson.photoUrls;
-    };
+    }
 
-    return callServer();
+    return fetchPhotoUrls();
 }

@@ -1,13 +1,15 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import { flickrSearch } from "./flickr.js";
+import { searchPhotosFromFlickr } from "./flickr.js";
 
 function App() {
     const [searchString, setSearchString] = useState("");
     const [photoUrls, setPhotoUrls] = useState([]);
 
     useEffect(() => {
-        setPhotoUrls(flickrSearch(searchString, 2));
+        searchPhotosFromFlickr(searchString, 2).then((result) =>
+            setPhotoUrls(result)
+        );
     }, [searchString]);
 
     return (
