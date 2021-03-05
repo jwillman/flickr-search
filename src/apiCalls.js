@@ -1,4 +1,4 @@
-export function searchPhotosFromFlickr(searchstring, results) {
+export function searchPhotos(searchstring, results) {
     const serverUrl = `https://flickr-search-server.azurewebsites.net/api/FlickrSearch?searchstring=${searchstring}&results=${results}`;
 
     console.log(`Flickr search called with ${searchstring} ${results}`);
