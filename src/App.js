@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import { searchPhotos } from "./apiCalls.js";
+import { searchPhotos } from "./api.js";
 
 function App() {
     const [searchString, setSearchString] = useState("");

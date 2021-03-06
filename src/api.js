@@ -4,13 +4,9 @@ export function searchPhotos(searchstring, results) {
     console.log(`Flickr search called with ${searchstring} ${results}`);
 
     async function fetchPhotoUrls() {
-        const response = await fetch(serverUrl, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
+        const response = await fetch(serverUrl);
         const responseJson = await response.json();
+        console.log(responseJson);
         return responseJson.photoUrls;
     }
 
