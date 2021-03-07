@@ -1,28 +1,84 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { getPhotoUrls } from "./api.js";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Spinner from "react-bootstrap/Spinner";
 
 function App() {
-    const [searchString, setSearchString] = useState("");
+    const [searchString, setSearchString] = useState(null);
     const [photoUrls, setPhotoUrls] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [offset, setOffset] = useState(0);
+    const resultsPerQuery = 5;
+    const infiniteScroll = useRef(null);
 
     useEffect(() => {
-        getPhotoUrls(searchString, 3, 0).then((result) => setPhotoUrls(result));
-    }, [searchString]);
+        if (searchString != null) {
+            setLoading(true);
+            getPhotoUrls(searchString, resultsPerQuery, offset).then(
+                (result) => {
+                    if (offset === 0) {
+                        setPhotoUrls(result);
+                    } else {
+                        setPhotoUrls((oldArray) =>
+                            [...oldArray].concat(result)
+                        );
+                    }
+
+                    setLoading(false);
+                }
+            );
+        }
+    }, [searchString, offset]);
+
+    useEffect(() => {
+        var options = {
+            root: null,
+            rootMargin: "10px",
+            threshold: 1.0,
+        };
+        const observer = new IntersectionObserver(handleObserver, options);
+        if (infiniteScroll.current) {
+            observer.observe(infiniteScroll.current);
+        }
+    }, []);
+
+    // infinite scroll handler
+    const handleObserver = (entities) => {
+        console.log("handleObserver called");
+        const target = entities[0];
+        if (target.isIntersecting) {
+            setOffset((offset) => offset + resultsPerQuery);
+        }
+    };
 
     return (
         <div className="App">
             <h1>Flickr search</h1>
-            <Search setSearchString={setSearchString} />
+            <Search setSearchString={setSearchString} setOffset={setOffset} />
             <Results photoUrls={photoUrls} />
+            <LoadingIndicator loading={loading} />
+            <span ref={infiniteScroll}></span>
         </div>
     );
 }
 
 function Search(props) {
-    return (
-        <input onChange={(e) => props.setSearchString(e.target.value)}></input>
-    );
+    const debounce = (func, delay) => {
+        let debounceTimer;
+        return function () {
+            const context = this;
+            const args = arguments;
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => func.apply(context, args), delay);
+        };
+    };
+    let handleChange = (e) => {
+        props.setSearchString(e.target.value);
+        props.setOffset(0);
+    };
+    let optimisedHandleChange = debounce(handleChange, 500);
+    return <input onChange={optimisedHandleChange}></input>;
 }
 
 function Results(props) {
@@ -33,6 +89,18 @@ function Results(props) {
         return <div id="results">{resultItems}</div>;
     } else {
         return <div id="results"></div>;
+    }
+}
+
+function LoadingIndicator(props) {
+    if (props.loading) {
+        return (
+            <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+            </Spinner>
+        );
+    } else {
+        return <span></span>;
     }
 }
 
