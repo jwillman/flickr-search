@@ -4,6 +4,8 @@ import { getPhotoUrls } from "./api.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Spinner from "react-bootstrap/Spinner";
 
+// TODO move the components into their own files/modules
+
 function App() {
     const [searchString, setSearchString] = useState(null);
     const [photoUrls, setPhotoUrls] = useState([]);
