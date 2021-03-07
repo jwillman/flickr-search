@@ -1,7 +1,11 @@
-export function searchPhotos(searchstring, results) {
-    const serverUrl = `https://flickr-search-server.azurewebsites.net/api/FlickrSearch?searchstring=${searchstring}&results=${results}`;
+// TODO error handling
 
-    console.log(`Flickr search called with ${searchstring} ${results}`);
+export function getPhotoUrls(searchstring, results, offset) {
+    const serverUrl = `https://flickr-search-server.azurewebsites.net/api/FlickrSearch?searchstring=${searchstring}&results=${results}&offset=${offset}`;
+
+    console.log(
+        `Flickr search called with searchstring: ${searchstring} results: ${results} offset: ${offset}`
+    );
 
     async function fetchPhotoUrls() {
         const response = await fetch(serverUrl);

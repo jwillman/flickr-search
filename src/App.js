@@ -1,20 +1,20 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import { searchPhotos } from "./api.js";
+import { getPhotoUrls } from "./api.js";
 
 function App() {
     const [searchString, setSearchString] = useState("");
     const [photoUrls, setPhotoUrls] = useState([]);
 
     useEffect(() => {
-        searchPhotos(searchString, 2).then((result) => setPhotoUrls(result));
+        getPhotoUrls(searchString, 3, 0).then((result) => setPhotoUrls(result));
     }, [searchString]);
 
     return (
         <div className="App">
             <h1>Flickr search</h1>
             <Search setSearchString={setSearchString} />
-            <Results items={photoUrls} />
+            <Results photoUrls={photoUrls} />
         </div>
     );
 }
@@ -26,10 +26,14 @@ function Search(props) {
 }
 
 function Results(props) {
-    const resultItems = props.items.map((x, index) => (
-        <img className="image" alt="Flickr" src={x} key={index} />
-    ));
-    return <div id="results">{resultItems}</div>;
+    if (props.photoUrls != null) {
+        const resultItems = props.photoUrls.map((x, index) => (
+            <img className="image" alt="Flickr" src={x} key={index} />
+        ));
+        return <div id="results">{resultItems}</div>;
+    } else {
+        return <div id="results"></div>;
+    }
 }
 
 export default App;
