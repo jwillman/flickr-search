@@ -11,25 +11,29 @@ function App() {
     const [photoUrls, setPhotoUrls] = useState([]);
     const [loading, setLoading] = useState(false);
     const [offset, setOffset] = useState(0);
-    const resultsPerQuery = 5;
+    const resultsPerQuery = 4;
     const infiniteScroll = useRef(null);
 
     useEffect(() => {
         if (searchString != null) {
-            setLoading(true);
-            getPhotoUrls(searchString, resultsPerQuery, offset).then(
-                (result) => {
-                    if (offset === 0) {
-                        setPhotoUrls(result);
-                    } else {
-                        setPhotoUrls((oldArray) =>
-                            [...oldArray].concat(result)
-                        );
-                    }
+            if (searchString === "") {
+                setPhotoUrls([]);
+            } else {
+                setLoading(true);
+                getPhotoUrls(searchString, resultsPerQuery, offset).then(
+                    (result) => {
+                        if (offset === 0) {
+                            setPhotoUrls(result);
+                        } else {
+                            setPhotoUrls((oldArray) =>
+                                [...oldArray].concat(result)
+                            );
+                        }
 
-                    setLoading(false);
-                }
-            );
+                        setLoading(false);
+                    }
+                );
+            }
         }
     }, [searchString, offset]);
 
